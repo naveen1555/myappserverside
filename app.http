@@ -1,0 +1,22 @@
+
+GET http://localhost:5000/selectCustomers
+####
+GET  http://localhost:5000/selectCustomers/1/
+####
+
+POST  http://localhost:5000/selectCustomers/
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "batista",
+  "email": "batista@gmail.com",
+  "password":"batista@123",
+  "address":"3-45",
+  "phoneNumber": 9988776655,
+  "cart":"null",
+  "products": "null",
+  "couponcode":0,
+}
+
+####
