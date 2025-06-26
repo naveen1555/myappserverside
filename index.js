@@ -59,33 +59,28 @@ app.get("/selectCustomers/:customerId/", async (request, response) => {
 });
 
 // Adding Customer Details
+
 app.post("/selectCustomers/", async (request, response) => {
   const customerDetails = request.body;
   const {
-    id,
     name,
     email,
     password,
     address,
-    phoneNumber,
-    cart,
-    products,
-    couponcode,
+    phoneNumber
   } = customerDetails;
+  console.log("Request body:", request.body);
+
   const addcustomerQuery = `
       INSERT INTO
-        customerdata(id,name,email,password,address,phoneNumber,cart,products,couponcode)
+        customerdata(name,email,password,address,phoneNumber)
       VALUES
         (
-          ${id},
           '${name}',
           '${email}',
           '${password}',
           '${address}',
-          ${phoneNumber},
-          '${cart}',
-          '${products}',
-          ${couponcode},
+          ${phoneNumber}
         );`;
 
   const dbResponse = await db.run(addcustomerQuery);
@@ -93,3 +88,55 @@ app.post("/selectCustomers/", async (request, response) => {
   response.send({ newcustomerId: customerId });
 });
 
+// PUT method
+
+app.put("/selectCustomers/:customerId/", async (request, response) => {
+  const { customerId } = request.params;
+  const {
+    name,
+    email,
+    password,
+    address,
+    phoneNumber
+  } = request.body;
+  // const updateQuery = `
+  //   UPDATE customerdata
+  //   SET
+  //     name = '${name}',
+  //     email = '${email}',
+  //     password = '${password}',
+  //     address = '${address}',
+  //     phoneNumber = ${phoneNumber}
+  //   WHERE
+  //     id = ${customerId};
+  // `;
+
+  const updateQuery = `
+    UPDATE customerdata
+    SET
+      name = ?,
+      email = ?,
+      password = ?,
+      address = ?,
+      phoneNumber = ?
+    WHERE id = ?;
+  `;
+  // await db.run(updateQuery);
+  // response.send("Customer Updated");
+  try {
+    await db.run(updateQuery, [name, email, password, address, phoneNumber, customerId]);
+    response.send("Customer Updated Successfully");
+  } catch (error) {
+    console.error(error);
+    response.status(500).send("Update Failed");
+  }
+});
+
+// DELETE method
+
+app.delete("/selectCustomers/:customerId/", async (request, response) => {
+  const { customerId } = request.params;
+  const deleteQuery = `DELETE FROM customerdata WHERE id = ?;`;
+  await db.run(deleteQuery);
+  response.send("Customer Deleted");
+});

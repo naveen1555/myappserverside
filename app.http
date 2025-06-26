@@ -1,22 +1,42 @@
 
+### GET all customers:
 GET http://localhost:5000/selectCustomers
-####
-GET  http://localhost:5000/selectCustomers/1/
-####
 
+#### ### Get customer by ID
+GET  http://localhost:5000/selectCustomers/1/
+
+
+#### Post or upload or create a new customer
 POST  http://localhost:5000/selectCustomers/
 Content-Type: application/json
 
 {
-  "id": 1,
-  "name": "batista",
-  "email": "batista@gmail.com",
-  "password":"batista@123",
-  "address":"3-45",
-  "phoneNumber": 9988776655,
-  "cart":"null",
-  "products": "null",
-  "couponcode":0,
+  "name": "Lary",
+  "email": "Larry@gmail.com",
+  "password":"Larryy@123",
+  "address":"5-46",
+  "phoneNumber": 9766554433
 }
 
 ####
+
+### Update a customer
+PUT http://localhost:5000/selectCustomers/1/
+Content-Type: application/json
+
+{
+    "name": "daniel vettori",
+    "email": "daniel@gmail.com",
+    "password": "daniel@123",
+    "address": "3-33,high-line street",
+    "phoneNumber": 9788554321
+}
+
+### Delete a customer by ID
+DELETE http://localhost:5000/selectCustomers/5/
+
+
+
+
+
+
